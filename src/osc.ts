@@ -68,6 +68,11 @@ function createNoteOsc(freq: number, index: number) {
   });
 
   oscCtrl.addEventListener('mouseup', (e: MouseEvent) => {
+  oscCtrl.addEventListener("dblclick", (e: MouseEvent) => {
+    // Silence drawbar
+    calculateVolume(300);
+  });
+
     if (isMouseDown) {
       calculateVolume(e.offsetY);
     }
