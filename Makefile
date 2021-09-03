@@ -15,5 +15,8 @@ lint: install
 	npm run lint -- --fix
 
 build: clean install
+	rm -rf docs
 	npm run build
 	mv dist docs
+	git add docs
+	git commit -m '[automated] Build'
