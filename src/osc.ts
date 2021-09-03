@@ -58,6 +58,10 @@ function createNoteOsc(freq: number, index: number) {
     volumeCtrl.style.height = maxHeight - offsetY + 'px'
   }
 
+  oscCtrl.addEventListener('dblclick', () => {
+    calculateVolume(300)
+  })
+
   oscCtrl.addEventListener('mousedown', (e: MouseEvent) => {
     calculateVolume(e.offsetY)
     if (!isPlaying) {
