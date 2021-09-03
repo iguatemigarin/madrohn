@@ -5,9 +5,12 @@
   "main": "index.html",
   "scripts": {
     "start": "parcel index.html --open",
-    "build": "parcel build index.html"
+    "build": "parcel build index.html",
+    "lint": "eslint src"
   },
   "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.30.0",
+    "@typescript-eslint/parser": "^4.30.0",
     "parcel-bundler": "^1.6.1"
   },
   "devDependencies": {

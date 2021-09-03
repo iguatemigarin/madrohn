@@ -1,30 +1,23 @@
-import { ctx, gain } from "./globals";
-import { h, Nodes } from "./dom";
-import {
-  getDefaultOctaves,
-  getEqualTemperamentIntonation,
-  getJustIntonation,
-  getOctavesFromIntonation,
-  getPythagoreanIntonation,
-  getMajorScale
-} from "./scales";
+import { ctx, gain } from './globals';
+import { h, Nodes } from './dom';
+import { getMajorScale } from './scales';
 
-function createNoteOsc(freq: number = 65.41, index: number) {
+function createNoteOsc(freq: number, index: number) {
   let isPlaying = false;
   let isMouseDown = false;
-  let volume = 0.3;
+  const volume = 0.3;
 
-  const container = h("div");
-  container.classList.add("note");
+  const container = h('div');
+  container.classList.add('note');
   if (index % 7 === 0) {
-    container.classList.add("root");
+    container.classList.add('root');
   }
 
-  const oscCtrl = h("div");
-  oscCtrl.classList.add("osc-ctrl");
+  const oscCtrl = h('div');
+  oscCtrl.classList.add('osc-ctrl');
 
-  const volumeCtrl = h("div");
-  volumeCtrl.classList.add("volume");
+  const volumeCtrl = h('div');
+  volumeCtrl.classList.add('volume');
   container.appendChild(volumeCtrl);
   container.appendChild(oscCtrl);
 
@@ -37,7 +30,7 @@ function createNoteOsc(freq: number = 65.41, index: number) {
     if (osc) {
       osc.stop();
     }
-    oscCtrl.classList.remove("playing");
+    oscCtrl.classList.remove('playing');
   };
 
   const start = () => {
@@ -50,7 +43,7 @@ function createNoteOsc(freq: number = 65.41, index: number) {
     osc.frequency.setValueAtTime(freq, ctx.currentTime);
     osc.connect(oscGain);
     osc.start();
-    oscCtrl.classList.add("playing");
+    oscCtrl.classList.add('playing');
   };
 
   const calculateVolume = (offsetY: number) => {
@@ -62,10 +55,10 @@ function createNoteOsc(freq: number = 65.41, index: number) {
       1
     );
     oscGain.gain.value = volume;
-    volumeCtrl.style.height = maxHeight - offsetY + "px";
+    volumeCtrl.style.height = maxHeight - offsetY + 'px';
   };
 
-  oscCtrl.addEventListener("mousedown", (e: MouseEvent) => {
+  oscCtrl.addEventListener('mousedown', (e: MouseEvent) => {
     calculateVolume(e.offsetY);
     if (!isPlaying) {
       start();
@@ -74,20 +67,20 @@ function createNoteOsc(freq: number = 65.41, index: number) {
     isMouseDown = true;
   });
 
-  oscCtrl.addEventListener("mouseup", (e: MouseEvent) => {
+  oscCtrl.addEventListener('mouseup', (e: MouseEvent) => {
     if (isMouseDown) {
       calculateVolume(e.offsetY);
     }
     isMouseDown = false;
   });
 
-  oscCtrl.addEventListener("mousemove", (e: MouseEvent) => {
+  oscCtrl.addEventListener('mousemove', (e: MouseEvent) => {
     if (isMouseDown) {
       calculateVolume(e.offsetY);
     }
   });
 
-  oscCtrl.addEventListener("mouseout", (e: MouseEvent) => {
+  oscCtrl.addEventListener('mouseout', () => {
     isMouseDown = false;
   });
 
@@ -98,7 +91,7 @@ function createNoteOsc(freq: number = 65.41, index: number) {
   };
 }
 
-export function playNotes() {
+export function playNotes(): () => void {
   // const C2 = 65.41;
   // const G1 = 49;
 
@@ -109,6 +102,6 @@ export function playNotes() {
 
   return () => {
     notes.forEach((remove) => remove());
-    Nodes.oscs.innerHTML = "";
+    Nodes.oscs.innerHTML = '';
   };
 }

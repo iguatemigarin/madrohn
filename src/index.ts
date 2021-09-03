@@ -1,2 +1,2 @@
-import "./globals";
-import "./events";
+import './globals';
+import './events';
