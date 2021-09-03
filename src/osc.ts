@@ -5,6 +5,7 @@ import { getMajorScale } from './scales'
 function createNoteOsc(freq: number, index: number) {
   let isPlaying = false
   let isMouseDown = false
+  let paint = false
   const volume = 0.3
 
   const container = h('div')
@@ -12,6 +13,8 @@ function createNoteOsc(freq: number, index: number) {
   if (index % 7 === 0) {
     container.classList.add('root')
   }
+
+  const oscs = Nodes.oscs
 
   const oscCtrl = h('div')
   oscCtrl.classList.add('osc-ctrl')
@@ -57,35 +60,35 @@ function createNoteOsc(freq: number, index: number) {
     oscGain.gain.value = volume
     volumeCtrl.style.height = maxHeight - offsetY + 'px'
   }
+  
+  oscs.addEventListener('mousedown', () => {
+    paint = true
+  })
+
+  oscs.addEventListener('mouseup', () => {
+    paint = false
+  })
 
   oscCtrl.addEventListener('dblclick', () => {
     calculateVolume(300)
   })
 
-  oscCtrl.addEventListener('mousedown', (e: MouseEvent) => {
+  oscCtrl.addEventListener("mousedown", (e: MouseEvent) => {
     calculateVolume(e.offsetY)
     if (!isPlaying) {
       start()
       isPlaying = true
     }
-    isMouseDown = true
   })
-
-  oscCtrl.addEventListener('mouseup', (e: MouseEvent) => {
-    if (isMouseDown) {
-      calculateVolume(e.offsetY)
-    }
-    isMouseDown = false
-  })
-
+  
   oscCtrl.addEventListener('mousemove', (e: MouseEvent) => {
-    if (isMouseDown) {
+    if (paint) {
       calculateVolume(e.offsetY)
+      if(!isPlaying){
+        start()
+        isPlaying = true
+      }
     }
-  })
-
-  oscCtrl.addEventListener('mouseout', () => {
-    isMouseDown = false
   })
 
   Nodes.oscs.appendChild(container)
