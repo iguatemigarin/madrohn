@@ -1,5 +1,5 @@
 .PHONY: install
-install: node_modules
+install:
 	npm i
 
 .PHONY: start
@@ -13,3 +13,7 @@ clean:
 .PHONY: lint
 lint: install
 	npm run lint -- --fix
+
+build: clean install
+	npm run build
+	mv dist docs
