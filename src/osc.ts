@@ -8,10 +8,10 @@ function createNoteOsc(freq: number, index: number) {
   let paint = false
   const volume = 0.3
 
-  const container = h('div')
-  container.classList.add('note')
+  const drawbar = h('div')
+  drawbar.classList.add('drawbar')
   if (index % 7 === 0) {
-    container.classList.add('root')
+    drawbar.classList.add('root')
   }
 
   const oscs = Nodes.oscs
@@ -21,8 +21,8 @@ function createNoteOsc(freq: number, index: number) {
 
   const volumeCtrl = h('div')
   volumeCtrl.classList.add('volume')
-  container.appendChild(volumeCtrl)
   container.appendChild(oscCtrl)
+  drawbar.appendChild(volumeCtrl)
 
   let osc: OscillatorNode
   const oscGain = ctx.createGain()
@@ -91,7 +91,7 @@ function createNoteOsc(freq: number, index: number) {
     }
   })
 
-  Nodes.oscs.appendChild(container)
+  Nodes.oscs.appendChild(drawbar)
 
   return () => {
     stop()
