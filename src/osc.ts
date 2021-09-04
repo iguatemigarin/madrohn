@@ -16,12 +16,8 @@ function createNoteOsc(freq: number, index: number) {
 
   const oscs = Nodes.oscs
 
-  const oscCtrl = h('div')
-  oscCtrl.classList.add('osc-ctrl')
-
   const volumeCtrl = h('div')
   volumeCtrl.classList.add('volume')
-  container.appendChild(oscCtrl)
   drawbar.appendChild(volumeCtrl)
 
   let osc: OscillatorNode
@@ -33,7 +29,7 @@ function createNoteOsc(freq: number, index: number) {
     if (osc) {
       osc.stop()
     }
-    oscCtrl.classList.remove('playing')
+    drawbar.classList.remove('playing')
   }
 
   const start = () => {
@@ -46,13 +42,13 @@ function createNoteOsc(freq: number, index: number) {
     osc.frequency.setValueAtTime(freq, ctx.currentTime)
     osc.connect(oscGain)
     osc.start()
-    oscCtrl.classList.add('playing')
+    drawbar.classList.add('playing')
   }
 
   const calculateVolume = (offsetY: number) => {
     const perceptionProportion = 1 / ((index + 1) * 1.1)
     // console.log(perceptionProportion);
-    const maxHeight = parseInt(getComputedStyle(oscCtrl).height, 10)
+    const maxHeight = parseInt(getComputedStyle(drawbar).height, 10)
     const volume = Math.min(
       ((maxHeight - offsetY) / maxHeight) * perceptionProportion,
       1
@@ -69,11 +65,11 @@ function createNoteOsc(freq: number, index: number) {
     paint = false
   })
 
-  oscCtrl.addEventListener('dblclick', () => {
+  drawbar.addEventListener('dblclick', () => {
     calculateVolume(300)
   })
 
-  oscCtrl.addEventListener("mousedown", (e: MouseEvent) => {
+  drawbar.addEventListener('mousedown', (e: MouseEvent) => { 
     calculateVolume(e.offsetY)
     if (!isPlaying) {
       start()
@@ -81,7 +77,7 @@ function createNoteOsc(freq: number, index: number) {
     }
   })
   
-  oscCtrl.addEventListener('mousemove', (e: MouseEvent) => {
+  drawbar.addEventListener('mousemove', (e: MouseEvent) => {
     if (paint) {
       calculateVolume(e.offsetY)
       if(!isPlaying){
