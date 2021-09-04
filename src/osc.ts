@@ -4,7 +4,6 @@ import { getMajorScale } from './scales'
 
 function createNoteOsc(freq: number, index: number) {
   let isPlaying = false
-  let isMouseDown = false
   let paint = false
   const volume = 0.3
 
