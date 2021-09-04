@@ -6,7 +6,7 @@
   max-height: 300px;
 }
 
-.note {
+.drawbar {
   margin: 0;
   width: auto;
   height: 100%;
@@ -14,23 +14,17 @@
   position: relative;
   flex-grow: 1;
 }
-.note.root {
+.drawbar.root {
   background: grey;
 }
-.note.playing {
+.drawbar.playing {
   box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
 }
-.note .osc-ctrl {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-}
-.note .volume {
+.drawbar .volume {
   background: red;
   opacity: 0.5;
   position: absolute;
   bottom: 0;
   width: 100%;
+  pointer-events: none;
 }
