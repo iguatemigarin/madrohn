@@ -6,7 +6,7 @@ export const getJustIntonation = (freq: number): number[] => [
   freq * (3 / 2),
   freq * (5 / 3),
   freq * (15 / 8),
-]
+];
 
 export const getPythagoreanIntonation = (freq: number): number[] => [
   freq * 1,
@@ -16,7 +16,7 @@ export const getPythagoreanIntonation = (freq: number): number[] => [
   freq * (3 / 2),
   freq * (27 / 16),
   freq * (243 / 128),
-]
+];
 
 export const getEqualTemperamentIntonation = (freq: number): number[] => [
   freq * 1,
@@ -26,18 +26,18 @@ export const getEqualTemperamentIntonation = (freq: number): number[] => [
   freq * 1.498307,
   freq * 1.587401,
   freq * 1.887749,
-]
+];
 
 export const getOctavesFromIntonation = (freqs: number[]): number[][] => {
-  const octaves = []
+  const octaves = [];
   for (let i = 0; i < 5; i++) {
     const octave = freqs.reduce<number[]>((memo, freq) => {
-      return [...memo, freq * (i + 1)]
-    }, [])
-    octaves.push(octave)
+      return [...memo, freq * (i + 1)];
+    }, []);
+    octaves.push(octave);
   }
-  return octaves
-}
+  return octaves;
+};
 
 export const getDefaultOctaves = (): number[] => [
   16.35, 17.32, 18.35, 19.45, 20.6, 21.83, 23.12, 24.5, 25.96, 27.5, 29.14,
@@ -51,13 +51,15 @@ export const getDefaultOctaves = (): number[] => [
   2093, 2217.46, 2349.32, 2489.02, 2637.02, 2793.83, 2959.96, 3135.96, 3322.44,
   3520, 3729.31, 3951.07, 4186.01, 4434.92, 4698.63, 4978.03, 5274.04, 5587.65,
   5919.91, 6271.93, 6644.88, 7040, 7458.62, 7902.13,
-]
+];
 
-export const getMajorScale = (): number[] => [
-  32.7, 36.71, 41.2, 43.65, 49, 55, 61.74, 65.41, 73.42, 82.41, 87.31, 98, 110,
-  123.47, 130.81, 146.83, 164.81, 174.61, 196, 220, 246.94, 261.63, 293.66,
-  329.63, 349.23, 392, 440, 493.88, 523.25, 587.33, 659.25, 698.46, 783.99, 880,
-  987.77, 1046.5, 1174.66, 1318.51, 1396.91, 1567.98, 1760, 1975.53, 2093,
-  2349.32, 2637.02, 2793.83, 3135.96, 3520, 3951.07, 4186.01, 4698.63, 5274.04,
-  5587.65, 6271.93, 7040, 7902.13,
-]
+export const Scales = {
+  major: [
+    32.7, 36.71, 41.2, 43.65, 49, 55, 61.74, 65.41, 73.42, 82.41, 87.31, 98,
+    110, 123.47, 130.81, 146.83, 164.81, 174.61, 196, 220, 246.94, 261.63,
+    293.66, 329.63, 349.23, 392, 440, 493.88, 523.25, 587.33, 659.25, 698.46,
+    783.99, 880, 987.77, 1046.5, 1174.66, 1318.51, 1396.91, 1567.98, 1760,
+    1975.53, 2093, 2349.32, 2637.02, 2793.83, 3135.96, 3520, 3951.07, 4186.01,
+    4698.63, 5274.04, 5587.65, 6271.93, 7040, 7902.13,
+  ],
+};

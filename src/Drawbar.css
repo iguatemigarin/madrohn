@@ -1,0 +1,21 @@
+.Drawbar {
+  margin: 0;
+  width: auto;
+  height: 100%;
+  border: 1px solid black;
+  position: relative;
+  flex-grow: 1;
+}
+
+.Drawbar .m-root {
+  background-color: grey;
+}
+
+.Drawbar__volume {
+  background: red;
+  opacity: 0.5;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  pointer-events: none;
+}

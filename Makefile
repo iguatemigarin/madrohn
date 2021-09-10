@@ -3,7 +3,7 @@ install:
 	npm i
 
 .PHONY: start
-start:
+start: install
 	npm start
 
 .PHONY: clean

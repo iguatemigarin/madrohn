@@ -1,0 +1,6 @@
+.Organ {
+  max-height: 300px;
+  display: flex;
+  justify-content: space-evenly;
+  height: 100%;
+}

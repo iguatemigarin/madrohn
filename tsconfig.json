@@ -2,14 +2,11 @@
   "compilerOptions": {
     "strict": true,
     "module": "commonjs",
-    "jsx": "preserve",
+    "jsx": "react",
     "esModuleInterop": true,
     "sourceMap": true,
     "allowJs": true,
-    "lib": [
-      "es6",
-      "dom"
-    ],
+    "lib": ["es6", "dom"],
     "rootDir": "src",
     "moduleResolution": "node"
   }
