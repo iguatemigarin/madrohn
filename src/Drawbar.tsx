@@ -10,19 +10,21 @@ const Volume: React.FC<VolumeProps> = ({ height }) => {
 };
 
 type DrawbarProps = {
-  note: number;
+  note: string;
   rootNote: boolean;
+  paint: boolean;
 };
 
 const organMaxHeight = 300;
 
-export const Drawbar: React.FC<DrawbarProps> = ({ note, rootNote }) => {
+export const Drawbar: React.FC<DrawbarProps> = ({ note, rootNote, paint }) => {
   const [height, setHeight] = React.useState(0);
   return (
     <div
       className={`Drawbar ${rootNote ? "m-root" : ""}`}
-      onMouseDown={(e) => setHeight(organMaxHeight - e.nativeEvent.offsetY)}
+      onMouseMove={(e) => paint && setHeight(organMaxHeight - e.nativeEvent.offsetY)}
     >
+      {note}
       <Volume height={height} />
     </div>
   );

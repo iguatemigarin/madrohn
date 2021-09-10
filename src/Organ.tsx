@@ -3,14 +3,18 @@ import { Drawbar } from "./Drawbar";
 import "./Organ.css";
 
 type OrganProps = {
-  scale: number[];
+  scale: {
+    note: string,
+    frequency: number
+  }[];
 };
 
 export const Organ: React.FC<OrganProps> = ({ scale }) => {
+  const [paint, setPaint] = React.useState(false);
   return (
-    <div className="Organ">
+    <div className="Organ" onMouseDown={() => setPaint(true)} onMouseUp={() => setPaint(false)}>
       {scale.map((note, index) => (
-        <Drawbar key={index} note={note} rootNote={index % 7 === 0}></Drawbar>
+        <Drawbar paint={paint} key={index} note={note.note} rootNote={index % 7 === 0}></Drawbar>
       ))}
     </div>
   );
