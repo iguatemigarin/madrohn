@@ -13,7 +13,6 @@ export enum Theme {
 
 export const App: React.FC = () => {
   const [theme, setTheme] = React.useState(Theme.white)
-  console.log('rerender')
   return (
     <div className={`App m-${theme}`}>
       <Organ

@@ -35,7 +35,7 @@ export const Drawbar: React.FC<DrawbarProps> = ({ theme, rootNote, paint, audioG
       className={`Drawbar ${rootNote ? 'm-root' : ''} m-${theme}`}
       onMouseMove={(e) => paint && setVolume(organMaxHeight - e.nativeEvent.offsetY)}
       onMouseDown={(e) => setVolume(organMaxHeight - e.nativeEvent.offsetY)}
-      onDoubleClick={() => { setVolume(0); audioGenerator.stop() }}
+      onDoubleClick={() => { setVolume(0); }}
     >
       {audioGenerator.note}
       <VolumeBar theme={theme} volume={volume} />
