@@ -1,14 +1,14 @@
-import React from "react";
-import { Organ } from "./Organ";
-import { Scales } from "./scales";
-import "./App.css";
+import './App.css'
+import { Organ } from './Organ'
+import React from 'react'
+import { Scales } from './scales'
+import { createOscillator } from './osc'
 
-function App() {
-  return (
-    <div className="App">
-      <Organ scale={Scales.major}></Organ>
-    </div>
-  );
-}
+const generators = Scales.major.map(createOscillator)
 
-export default App;
+const App: React.FC = () =>
+  <div className="App">
+    <Organ generators={generators}></Organ>
+  </div>
+
+export default App

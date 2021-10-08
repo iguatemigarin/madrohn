@@ -1,26 +1,46 @@
-import { audioContext, masterGain } from "./globals";
+import { audioContext, masterGain } from './globals'
 
-export const createOscillator = (freq: number) => {
-  let osc: OscillatorNode;
-  const oscGain = audioContext.createGain();
-  const sineTerms = new Float32Array([0, 1]);
-  const cosineTerms = new Float32Array(sineTerms.length);
+export type AudioGenerator = {
+  osc: OscillatorNode;
+  stop: () => void;
+  setVolume: (volume: number, organMaxHeight: number, index: number) => void;
+  note: string;
+}
+
+const calculateVolume = (volume: number, organMaxHeight: number, index: number) => {
+  const perceptionProportion = 1 / ((index + 1) * 1.1)
+  const adjustedVolume = volume / organMaxHeight * perceptionProportion
+  return adjustedVolume
+}
+
+export const createOscillator = ({ note, frequency }: { note: string, frequency: number }): AudioGenerator => {
+  let isStarted = false
+  const osc = audioContext.createOscillator()
+  const oscGain = audioContext.createGain()
+  const sineTerms = new Float32Array([0, 1])
+  const cosineTerms = new Float32Array(sineTerms.length)
   const customWaveform = audioContext.createPeriodicWave(
     cosineTerms,
     sineTerms
-  );
+  )
 
-  oscGain.gain.value = 0;
-  oscGain.connect(masterGain);
-  osc = audioContext.createOscillator();
-  osc.setPeriodicWave(customWaveform);
-  osc.frequency.setValueAtTime(freq, audioContext.currentTime);
-  osc.connect(oscGain);
-  osc.start();
+  oscGain.gain.value = 0
+  oscGain.connect(masterGain)
+  osc.setPeriodicWave(customWaveform)
+  osc.frequency.setValueAtTime(frequency, audioContext.currentTime)
+  osc.connect(oscGain)
 
   const stop = () => {
-    osc.stop();
-  };
+    osc.stop()
+  }
 
-  return { osc, oscGain, stop };
-};
+  const setVolume = (volume: number, organMaxHeight: number, index: number): void => {
+    oscGain.gain.value = calculateVolume(volume, organMaxHeight, index)
+    if (!isStarted) {
+      osc.start()
+      isStarted = true
+    }
+  }
+
+  return { osc, stop, note, setVolume }
+}

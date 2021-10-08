@@ -1,27 +1,22 @@
 import './Organ.css'
+import { AudioGenerator } from './osc'
 import { Drawbar } from './Drawbar'
 import React from 'react'
-import { createOscillator } from './osc'
 
 type OrganProps = {
-  scale: {
-    note: string,
-    frequency: number
-  }[];
+  generators: AudioGenerator[]
 };
 
-export const Organ: React.FC<OrganProps> = ({ scale }) => {
+export const Organ: React.FC<OrganProps> = ({ generators }) => {
   const [paint, setPaint] = React.useState(false)
   return (
     <div className="Organ" onMouseDown={() => setPaint(true)} onMouseUp={() => setPaint(false)}>
-      {scale.map((note, index) => {
-        const oscillator = createOscillator(note.frequency)
+      {generators.map((generator, index) => {
         return (
           <Drawbar
-            oscillator={oscillator}
+            generator={generator}
             paint={paint}
             key={index}
-            note={note.note}
             rootNote={index % 7 === 0}
             index={index}
           />
