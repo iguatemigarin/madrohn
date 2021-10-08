@@ -2,3 +2,7 @@
   width: 100vw;
   height: 100vh;
 }
+
+.App.m-dark {
+  background-color: #000;
+}

@@ -1,16 +1,19 @@
 import React from 'react'
 import { masterGain } from './globals'
+import { Theme } from './App';
 import './Drawbar.css'
 
 type VolumeProps = {
+  theme: Theme;
   volume: number;
 };
 
-const VolumeBar: React.FC<VolumeProps> = ({ volume }) => {
-  return <div className="Drawbar__volume" style={{ height: volume }}></div>
+const VolumeBar: React.FC<VolumeProps> = ({ theme, volume }) => {
+  return <div className={`Drawbar__volume m-${theme}`} style={{ height: volume }}></div>
 }
 
 type DrawbarProps = {
+  theme: Theme
   note: string;
   rootNote: boolean;
   paint: boolean;
@@ -28,10 +31,9 @@ const calculateVolume = (offsetY: number) => {
   )
 }
 
-export const Drawbar: React.FC<DrawbarProps> = ({ note, rootNote, paint, oscillator }) => {
+export const Drawbar: React.FC<DrawbarProps> = ({ theme, note, rootNote, paint, oscillator }) => {
   const [volume, setVolume] = React.useState(0)
 
-  // ! BE VERY CAREFUL WHEN UNCOMMENTING THIS SHIT, SHIT CAN GET LOUD
   React.useEffect(() => {
     const adjustedVolume = volume / organMaxHeight
     console.log('volume', adjustedVolume)
@@ -40,13 +42,13 @@ export const Drawbar: React.FC<DrawbarProps> = ({ note, rootNote, paint, oscilla
   }, [volume])
   return (
     <div
-      className={`Drawbar ${rootNote ? 'm-root' : ''}`}
+      className={`Drawbar ${rootNote ? 'm-root' : ''} m-${theme}`}
       onMouseMove={(e) => paint && setVolume(organMaxHeight - e.nativeEvent.offsetY)}
       onMouseDown={(e) => setVolume(organMaxHeight - e.nativeEvent.offsetY)}
       onDoubleClick={() => { setVolume(0); oscillator.stop() }}
     >
       {note}
-      <VolumeBar volume={volume} />
+      <VolumeBar theme={theme} volume={volume} />
     </div>
   )
 }

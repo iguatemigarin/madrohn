@@ -7,6 +7,11 @@
   flex-grow: 1;
 }
 
+.Drawbar.m-dark {
+  border: 1px solid #fff;
+  color: #fff;
+}
+
 .Drawbar .m-root {
   background-color: grey;
 }
@@ -18,4 +23,8 @@
   bottom: 0;
   width: 100%;
   pointer-events: none;
+}
+
+.Drawbar__volume.m-dark {
+  opacity: 0.8;
 }
