@@ -13,19 +13,18 @@ const VolumeBar: React.FC<VolumeProps> = ({ volume }) => {
 type DrawbarProps = {
   rootNote: boolean;
   paint: boolean;
-  generator: AudioGenerator;
+  audioGenerator: AudioGenerator;
   index: number;
 };
 
 // TODO get from computed style
 const organMaxHeight = 300
 
-export const Drawbar: React.FC<DrawbarProps> = ({ rootNote, paint, generator, index }) => {
+export const Drawbar: React.FC<DrawbarProps> = ({ rootNote, paint, audioGenerator, index }) => {
   const [volume, setVolume] = React.useState(0)
 
-  // ! BE VERY CAREFUL WHEN UNCOMMENTING THIS SHIT, SHIT CAN GET LOUD
   React.useEffect(() => {
-    generator.setVolume(volume, organMaxHeight, index)
+    audioGenerator.setVolume(volume, organMaxHeight, index)
   }, [volume])
 
   return (
@@ -33,9 +32,9 @@ export const Drawbar: React.FC<DrawbarProps> = ({ rootNote, paint, generator, in
       className={`Drawbar ${rootNote ? 'm-root' : ''}`}
       onMouseMove={(e) => paint && setVolume(organMaxHeight - e.nativeEvent.offsetY)}
       onMouseDown={(e) => setVolume(organMaxHeight - e.nativeEvent.offsetY)}
-      onDoubleClick={() => { setVolume(0); generator.stop() }}
+      onDoubleClick={() => { setVolume(0); audioGenerator.stop() }}
     >
-      {generator.note}
+      {audioGenerator.note}
       <VolumeBar volume={volume} />
     </div>
   )

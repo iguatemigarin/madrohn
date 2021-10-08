@@ -4,17 +4,17 @@ import { Drawbar } from './Drawbar'
 import React from 'react'
 
 type OrganProps = {
-  generators: AudioGenerator[]
+  audioGenerators: AudioGenerator[]
 };
 
-export const Organ: React.FC<OrganProps> = ({ generators }) => {
+export const Organ: React.FC<OrganProps> = ({ audioGenerators }) => {
   const [paint, setPaint] = React.useState(false)
   return (
     <div className="Organ" onMouseDown={() => setPaint(true)} onMouseUp={() => setPaint(false)}>
-      {generators.map((generator, index) => {
+      {audioGenerators.map((audioGenerator, index) => {
         return (
           <Drawbar
-            generator={generator}
+            audioGenerator={audioGenerator}
             paint={paint}
             key={index}
             rootNote={index % 7 === 0}

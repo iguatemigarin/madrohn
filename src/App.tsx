@@ -2,13 +2,13 @@ import './App.css'
 import { Organ } from './Organ'
 import React from 'react'
 import { Scales } from './scales'
-import { createOscillator } from './osc'
+import { createAudioGenerator } from './osc'
 
-const generators = Scales.major.map(createOscillator)
+const audioGenerators = Scales.major.map(createAudioGenerator)
 
 const App: React.FC = () =>
   <div className="App">
-    <Organ generators={generators}></Organ>
+    <Organ audioGenerators={audioGenerators}></Organ>
   </div>
 
 export default App

@@ -13,7 +13,7 @@ const calculateVolume = (volume: number, organMaxHeight: number, index: number) 
   return adjustedVolume
 }
 
-export const createOscillator = ({ note, frequency }: { note: string, frequency: number }): AudioGenerator => {
+export const createAudioGenerator = ({ note, frequency }: { note: string, frequency: number }): AudioGenerator => {
   let isStarted = false
   const osc = audioContext.createOscillator()
   const oscGain = audioContext.createGain()
@@ -39,6 +39,10 @@ export const createOscillator = ({ note, frequency }: { note: string, frequency:
     if (!isStarted) {
       osc.start()
       isStarted = true
+    }
+
+    if (audioContext.state !== 'running') {
+      audioContext.resume()
     }
   }
 
