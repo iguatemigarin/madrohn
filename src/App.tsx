@@ -12,7 +12,13 @@ export enum Theme {
 }
 
 export const App: React.FC = () => {
-  const [theme, setTheme] = React.useState(Theme.white)
+  // Essa porra tambem nao da pra simplificar caralho? 
+  const [theme, setTheme] = React.useState(localStorage.getItem("theme") === Theme.dark ? Theme.dark : Theme.white)
+
+  React.useEffect(() => {
+    localStorage.setItem("theme", theme)
+  }, [theme])
+
   return (
     <div className={`App m-${theme}`}>
       <Organ
