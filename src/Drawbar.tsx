@@ -2,6 +2,7 @@ import React from 'react'
 import { masterGain } from './globals'
 import { Theme } from './App';
 import './Drawbar.css'
+import { AudioGenerator } from './osc'
 
 type VolumeProps = {
   theme: Theme;
@@ -14,41 +15,31 @@ const VolumeBar: React.FC<VolumeProps> = ({ theme, volume }) => {
 
 type DrawbarProps = {
   theme: Theme
-  note: string;
   rootNote: boolean;
   paint: boolean;
-  oscillator: { osc: OscillatorNode, oscGain: GainNode, stop: () => void }
+  generator: AudioGenerator;
+  index: number;
 };
 
 // TODO get from computed style
 const organMaxHeight = 300
 
-const calculateVolume = (offsetY: number) => {
-  // const perceptionProportion = 1 / ((index + 1) * 1.1)
-  return Math.min(
-    ((organMaxHeight - offsetY) / organMaxHeight),
-    1
-  )
-}
-
-export const Drawbar: React.FC<DrawbarProps> = ({ theme, note, rootNote, paint, oscillator }) => {
+export const Drawbar: React.FC<DrawbarProps> = ({ theme, rootNote, paint, generator, index }) => {
   const [volume, setVolume] = React.useState(0)
 
   React.useEffect(() => {
-    const adjustedVolume = volume / organMaxHeight
-    console.log('volume', adjustedVolume)
-    oscillator.oscGain.gain.value = adjustedVolume
-    oscillator.oscGain.connect(masterGain)
+    generator.setVolume(volume, organMaxHeight, index)
   }, [volume])
+
   return (
     <div
       className={`Drawbar ${rootNote ? 'm-root' : ''} m-${theme}`}
       onMouseMove={(e) => paint && setVolume(organMaxHeight - e.nativeEvent.offsetY)}
       onMouseDown={(e) => setVolume(organMaxHeight - e.nativeEvent.offsetY)}
-      onDoubleClick={() => { setVolume(0); oscillator.stop() }}
+      onDoubleClick={() => { setVolume(0); generator.stop() }}
     >
-      {note}
+      {generator.note}
       <VolumeBar theme={theme} volume={volume} />
-    </div>
+    </div >
   )
 }
